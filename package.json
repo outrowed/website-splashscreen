@@ -16,7 +16,7 @@
 		"build-storybook": "storybook build"
 	},
 	"dependencies": {
-		"@astrojs/react": "^7.0.1",
+		"@astrojs/react": "^7.1.0",
 		"@astrojs/sitemap": "^3.7.4",
 		"@icons-pack/react-simple-icons": "^13.15.1",
 		"@types/react": "^19.3.0",
