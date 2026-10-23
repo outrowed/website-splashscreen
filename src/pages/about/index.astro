@@ -16,10 +16,15 @@ import {
 	SiYoutube,
 } from "@icons-pack/react-simple-icons";
 
+export interface Props {
+	showSplash?: boolean | undefined;
+}
+
+const { showSplash = false } = Astro.props;
 const title = `${Strings.SlugTitles.About} - ${Strings.SiteTitle}`;
 ---
 
-<BaseLayout title={title} activeTab={RootRoutes.get("Home")!}>
+<BaseLayout title={title} activeTab={RootRoutes.get("Home")!} showSplash={showSplash}>
 	<TableOfContents />
 	<section class={`${Styles.section} ${Styles.section_hero}`}>
 		<h1 class={Styles.h1}>{Strings.SiteTitle.toUpperCase()}</h1>
@@ -29,7 +34,6 @@ const title = `${Strings.SlugTitles.About} - ${Strings.SiteTitle}`;
 			alt=""
 			layout="constrained"
 			priority
-			class={Styles.hero_img}
 			draggable={false}
 		/>
 		<div class={Styles.text_columns}>

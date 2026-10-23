@@ -1,12 +1,11 @@
 ---
-// note: maybe used for a common UI component in the future
 import type { HTMLAttributes } from "astro/types";
 import styles from "./Surface.module.css";
 
 export type SurfaceVariant = "card" | "bar" | "button" | "subtle";
 
-type Props = Omit<HTMLAttributes<"div"> & HTMLAttributes<"a">, "class"> & {
-	as?: "div" | "section" | "article" | "nav" | "aside" | "a";
+type Props = Omit<HTMLAttributes<"div"> & HTMLAttributes<"a"> & HTMLAttributes<"button">, "class"> & {
+	as?: "div" | "section" | "article" | "nav" | "aside" | "a" | "button";
 	variant?: SurfaceVariant;
 	class?: string | undefined | null;
 };

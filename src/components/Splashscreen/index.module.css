@@ -1,0 +1,283 @@
+.splash_container {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	background: #000;
+	transition:
+		opacity 0.4s ease-out,
+		visibility 0.4s ease-out;
+
+	&[data-state="hidden"] {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+}
+
+/* biome-ignore lint/correctness/noUnknownPseudoClass: global required because splashscreen is toggled from <html> splash-seen classname */
+:global(html.splash-seen) .splash_container {
+	display: none;
+}
+
+/* Background layers */
+.bg_gradient {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(to bottom, black, rgb(0 0 0 / 25%)),
+		linear-gradient(to right, #ff0000, #0011ff);
+}
+
+.bg_blue,
+.bg_brand,
+.bg_light {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+}
+
+/* Desktop-30 solid blue */
+.bg_blue {
+	background: #1a05a2;
+}
+
+/* Desktop-31 & Desktop-32 deep blue with black corner and red corner glow */
+.bg_brand {
+	background:
+		radial-gradient(circle at 12% 15%, black 0%, transparent 60%),
+		radial-gradient(circle at 88% 85%, #ff0000 0%, transparent 65%), #1a05a2;
+}
+
+.bg_light {
+	background: #e5d4e5;
+}
+
+/* 1440 x 1024 virtual canvas centered on viewport */
+.stage_welcome {
+	position: absolute;
+	width: 1440px;
+	height: 1024px;
+	left: 50%;
+	top: 50%;
+	translate: -50% -50%;
+	scale: var(--splash-scale, 1);
+}
+
+.panda_logo,
+.gradient_panda,
+.welcome_text,
+.csui_title,
+.slogan_text,
+.shape_portal {
+	position: absolute;
+	opacity: 0;
+}
+
+.panda_logo {
+	left: 405px;
+	top: 197px;
+	width: 630px;
+	height: 630px;
+}
+
+.gradient_panda {
+	left: 821px;
+	top: 283px;
+	width: 395px;
+	height: 395px;
+}
+
+.welcome_text,
+.csui_title,
+.slogan_text {
+	font-style: italic;
+	font-weight: 858;
+	letter-spacing: -0.04em;
+	white-space: nowrap;
+	z-index: 2;
+}
+
+.welcome_text {
+	left: 412px;
+	top: 441px;
+	width: 617px;
+	height: 143px;
+	font-size: 78px;
+	line-height: 143px;
+	text-align: center;
+}
+
+.welcome_white {
+	display: block;
+	color: #ffffff;
+}
+
+.welcome_gradient {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 143px;
+	background: linear-gradient(to right, #ff0000 0%, #2677ed 50%, #0011ff 100%);
+	background-clip: text;
+	color: transparent;
+	opacity: 0;
+}
+
+.csui_title {
+	left: 390px;
+	top: 440px;
+	width: 659px;
+	height: 216px;
+	font-size: 150px;
+	line-height: 216px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.slogan_text {
+	left: 300px;
+	top: 529px;
+	width: 684px;
+	height: 216px;
+	font-size: 55px;
+	line-height: 216px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.shape_portal {
+	left: 263px;
+	top: 324px;
+	width: 410px;
+	height: 410px;
+	border-radius: 32px;
+	background: linear-gradient(135deg, rgb(0 0 0 / 20%), rgb(255 0 0 / 20%));
+	visibility: hidden;
+	z-index: 1;
+}
+
+/* Stage: Terminal Card (Hidden until active to avoid backdrop-filter ghosting) */
+.terminal_card {
+	display: none;
+	position: relative;
+	width: min(680px, 92vw);
+	height: min(586px, 80dvh);
+	min-height: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	flex-shrink: 0;
+	border-radius: 56px;
+	padding: 3rem 2.5rem;
+	flex-direction: column;
+	justify-content: flex-start;
+	z-index: 4;
+	opacity: 0;
+	transform: scale(0.9);
+
+	&[data-active="true"] {
+		display: flex;
+	}
+}
+
+.terminal_watermark {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	font-size: min(28vw, 240px);
+	font-style: italic;
+	font-weight: var(--font-base-weight-black);
+	letter-spacing: var(--font-base-letterspacing);
+	color: rgba(255, 255, 255, 0.08);
+	pointer-events: none;
+	z-index: 1;
+	user-select: none;
+}
+
+.terminal_lines {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	min-height: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	font-family: monospace, var(--fontface-inter);
+}
+
+.terminal_line {
+	font-size: min(4vw, 22px);
+	font-weight: var(--font-base-weight-semibold);
+	letter-spacing: -0.02em;
+	color: #aae0ff;
+	text-shadow: 0 0 10px rgba(170, 224, 255, 0.6);
+	min-height: 1.4em;
+	flex-shrink: 0;
+	overflow-wrap: anywhere;
+	display: block;
+	align-items: center;
+}
+
+.terminal_cursor {
+	display: inline-block;
+	width: 10px;
+	height: 1.2em;
+	background: #aae0ff;
+	margin-left: 6px;
+	animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+.skip_button {
+	position: absolute;
+	bottom: 2rem;
+	right: 2rem;
+	z-index: 10;
+	border-radius: var(--border-radius-pill);
+	padding: 8px 18px;
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 14px;
+	font-weight: var(--font-base-weight-semibold);
+	letter-spacing: var(--font-base-letterspacing);
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	transition:
+		background 0.2s,
+		color 0.2s,
+		transform 0.2s;
+
+	&:hover {
+		background: rgba(255, 255, 255, 0.18);
+		color: #fff;
+		transform: translateY(-2px);
+	}
+}
+
+/* Floating Developer Restart Button */
+@media (max-width: 600px) {
+	.terminal_card {
+		padding: 1.25rem;
+		border-radius: 31px;
+	}
+}

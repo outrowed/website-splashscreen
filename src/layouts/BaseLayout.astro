@@ -1,18 +1,19 @@
 ---
 import "@styles/global.css";
 import Footer from "@components/Footer.astro";
-
 import Header from "@components/Header.astro";
+import Splashscreen from "@/components/Splashscreen/index.astro";
 import type { RootRoutesValues } from "@/routes";
 import { Font } from "astro:assets";
 import SpeedInsights from "@vercel/speed-insights/astro";
 
-interface Props {
+export interface Props {
 	title: string;
 	activeTab: RootRoutesValues;
+	showSplash?: boolean | undefined;
 }
 
-const { title, activeTab } = Astro.props;
+const { title, activeTab, showSplash = false } = Astro.props;
 ---
 
 <SpeedInsights />
@@ -26,8 +27,18 @@ const { title, activeTab } = Astro.props;
 		<Font cssVariable="--fontface-inter" preload />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		{
+			showSplash && (
+				<script is:inline>
+					if (sessionStorage.getItem("csui26_splash_seen") === "true") {
+						document.documentElement.classList.add("splash-seen");
+					}
+				</script>
+			)
+		}
 	</head>
 	<body>
+		{showSplash && <Splashscreen />}
 		<Header activeTab={activeTab} />
 
 		<main style="flex-grow: 1;">
